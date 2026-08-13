@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlickEd | Flick. Learn. Unlock.</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div id="app" class="dark-theme">
+        <!-- Top Header Navigation -->
+        <header class="app-header">
+            <div class="logo-container">
+                <div class="logo-badge"><i data-lucide="sparkles"></i></div>
+                <span class="logo-text">Flick<span class="highlight">Ed</span></span>
+            </div>
+            
+            <!-- Mode Switcher Tabs -->
+            <nav class="mode-tabs">
+                <button id="tab-child" class="tab-btn active" onclick="switchMode('child')">
+                    <i data-lucide="play-circle"></i> Child Feed
+                </button>
+                <button id="tab-parent" class="tab-btn" onclick="switchMode('parent')">
+                    <i data-lucide="shield-check"></i> Parent Portal
+                </button>
+            </nav>
+
+            <!-- Stats Bar (Child) -->
+            <div class="user-stats" id="user-stats">
+                <div class="stat-badge xp-badge">
+                    <i data-lucide="zap"></i>
+                    <span id="xp-counter">250 XP</span>
+                </div>
+                <div class="stat-badge streak-badge">
+                    <i data-lucide="flame"></i>
+                    <span id="streak-counter">4 Days</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-container">
+            
+            <!-- SECTION 1: CHILD VERTICAL FEED -->
+            <section id="child-view" class="view-section active">
+                <div class="feed-wrapper">
+                    <!-- Concept Breadcrumb Bar -->
+                    <div class="concept-header">
+                        <div class="concept-pill">
+                            <span class="subject-tag" id="feed-subject">Mathematics</span>
+                            <span class="concept-title" id="feed-concept-title">Equivalent Fractions</span>
+                        </div>
+                        <div class="step-indicator">
+                            Step <span id="feed-step-num">1</span> of <span id="feed-total-steps">4</span>
+                        </div>
+                    </div>
+
+                    <!-- Vertical Video Card -->
+                    <div class="video-card">
+                        <div class="iframe-container" id="iframe-container">
+                            <iframe id="yt-player" 
+                                src="https://www.youtube.com/embed/N1-eN_j8YxQ?enablejsapi=1&autoplay=1&controls=1&modestbranding=1" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+
+                        <!-- Video Info Overlay -->
+                        <div class="video-info-overlay">
+                            <h3 id="video-title">Fractions for Kids - MathAntics</h3>
+                            <p id="video-creator"><i data-lucide="check-circle-2"></i> Verified Creator: MathAntics</p>
+                        </div>
+
+                        <!-- Side Action Bar -->
+                        <div class="side-action-bar">
+                            <button class="action-btn" onclick="triggerQuestionModal()">
+                                <div class="icon-wrap"><i data-lucide="help-circle"></i></div>
+                                <span>Quiz</span>
+                            </button>
+                            <button class="action-btn" id="like-btn" onclick="toggleLike()">
+                                <div class="icon-wrap"><i data-lucide="heart"></i></div>
+                                <span id="like-count">1.2k</span>
+                            </button>
+                            <button class="action-btn" onclick="nextVideo()">
+                                <div class="icon-wrap glow"><i data-lucide="arrow-down"></i></div>
+                                <span>Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: PARENT DASHBOARD -->
+            <section id="parent-view" class="view-section">
+                <div class="parent-dashboard">
+                    <!-- Parent Header Widget -->
+                    <div class="parent-banner">
+                        <div class="child-avatar-wrap">
+                            <div class="avatar-icon"><i data-lucide="smile"></i></div>
+                        </div>
+                        <div class="parent-title-group">
+                            <h2>Agrima's Learning Journey</h2>
+                            <p class="subtitle">Grade 5 • Age 10 • Primary Focus: Fractions & Space Exploration</p>
+                        </div>
+                        <div class="parent-pin-status">
+                            <i data-lucide="lock"></i> Parent Verified
+                        </div>
+                    </div>
+
+                    <!-- Daily Summary Stats Grid -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon blue"><i data-lucide="tv"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-val" id="parent-videos-count">12</span>
+                                <span class="metric-label">Videos Explored</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon green"><i data-lucide="check-circle"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-val" id="parent-accuracy">88%</span>
+                                <span class="metric-label">Quiz Accuracy</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon purple"><i data-lucide="award"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-val" id="parent-concepts-count">3</span>
+                                <span class="metric-label">Concepts Mastered</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon orange"><i data-lucide="clock"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-val">45 min</span>
+                                <span class="metric-label">Learning Screen Time</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Concept Mastery Progression -->
+                    <div class="dashboard-section">
+                        <h3><i data-lucide="git-merge"></i> Learning Graph Concept Breakdown</h3>
+                        <div class="concept-list" id="concept-list">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- AI Conversation Starters Layer -->
+                    <div class="dashboard-section conversation-box">
+                        <h3><i data-lucide="message-square-heart"></i> AI Parent-Child Conversation Starters</h3>
+                        <p class="section-desc">Turn screen consumption into meaningful table conversations.</p>
+                        <div class="prompts-list" id="prompts-list">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ACTIVE RECALL QUESTION MODAL -->
+        <div id="question-modal" class="modal-backdrop">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <span class="modal-badge"><i data-lucide="sparkles"></i> Active Checkpoint</span>
+                    <button class="close-btn" onclick="closeQuestionModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h3 id="modal-question-text">What does the bottom number (denominator) of a fraction tell us?</h3>
+                    <div class="options-group" id="modal-options-group">
+                        <!-- Options injected dynamically -->
+                    </div>
+                    <div id="modal-feedback" class="feedback-box hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
