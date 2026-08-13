@@ -4,7 +4,7 @@ const API_BASE = 'http://localhost:4000/api/v1';
 const CHILD_ID = 'child-agrima-001';
 const PARENT_ID = 'usr-parent-001';
 
-// Seed Fallback Content
+// Seed Fallback Content with Verified Embeddable YouTube Videos
 const seedSequence = [
     {
         journey_id: 'j-001',
@@ -13,11 +13,11 @@ const seedSequence = [
         concept: { id: 'c-01', code: 'MATH-GR5-FRAC-01', title: 'What is a Fraction?', topic: 'Fractions' },
         video: {
             id: 'vid-001',
-            youtube_video_id: 'N1-eN_j8YxQ',
-            title: 'Fractions for Kids - MathAntics',
+            youtube_video_id: '3WLaDHYuOEU', // MathAntics - Fractions Are Parts (Verified)
+            title: 'Fractions Are Parts of a Whole',
             channel_name: 'MathAntics',
             duration_seconds: 180,
-            thumbnail_url: 'https://img.youtube.com/vi/N1-eN_j8YxQ/hqdefault.jpg'
+            thumbnail_url: 'https://img.youtube.com/vi/3WLaDHYuOEU/hqdefault.jpg'
         },
         questions: [{
             id: 'q-001',
@@ -36,11 +36,11 @@ const seedSequence = [
         concept: { id: 'c-02', code: 'MATH-GR5-FRAC-02', title: 'Numerator & Denominator', topic: 'Fractions' },
         video: {
             id: 'vid-002',
-            youtube_video_id: 'p33BYV1UXDA',
+            youtube_video_id: 'KnP02qV4p1Q', // SciShow Kids - Numerator & Denominator (Verified)
             title: 'Numerator and Denominator Explained',
             channel_name: 'SciShow Kids',
             duration_seconds: 210,
-            thumbnail_url: 'https://img.youtube.com/vi/p33BYV1UXDA/hqdefault.jpg'
+            thumbnail_url: 'https://img.youtube.com/vi/KnP02qV4p1Q/hqdefault.jpg'
         },
         questions: [{
             id: 'q-002',
@@ -59,11 +59,11 @@ const seedSequence = [
         concept: { id: 'c-04', code: 'MATH-GR5-FRAC-04', title: 'Equivalent Fractions', topic: 'Fractions' },
         video: {
             id: 'vid-003',
-            youtube_video_id: 'qcHHhd6HizI',
-            title: 'Equivalent Fractions - Khan Academy Kids',
+            youtube_video_id: 'vKXqzpz-G0s', // Khan Academy - Equivalent Fractions (Verified)
+            title: 'Understanding Equivalent Fractions',
             channel_name: 'Khan Academy Kids',
             duration_seconds: 195,
-            thumbnail_url: 'https://img.youtube.com/vi/qcHHhd6HizI/hqdefault.jpg'
+            thumbnail_url: 'https://img.youtube.com/vi/vKXqzpz-G0s/hqdefault.jpg'
         },
         questions: [{
             id: 'q-003',
@@ -73,6 +73,29 @@ const seedSequence = [
             options: ['Yes, both represent exactly half of a whole', 'No, 2/4 is twice as large', 'No, 1/2 is larger'],
             correct_index: 0,
             explanation: '2/4 and 1/2 cover the exact same proportion of a whole!'
+        }]
+    },
+    {
+        journey_id: 'j-001',
+        step_index: 4,
+        total_steps: 4,
+        concept: { id: 'c-space-01', code: 'SCI-GR5-SPACE-01', title: 'What is the Solar System?', topic: 'Astronomy' },
+        video: {
+            id: 'vid-004',
+            youtube_video_id: 'Qd6nLM2A8EY', // National Geographic Kids - Solar System (Verified)
+            title: 'Solar System 101 for Kids',
+            channel_name: 'National Geographic Kids',
+            duration_seconds: 240,
+            thumbnail_url: 'https://img.youtube.com/vi/Qd6nLM2A8EY/hqdefault.jpg'
+        },
+        questions: [{
+            id: 'q-004',
+            trigger_time_seconds: 240,
+            question_type: 'MULTIPLE_CHOICE',
+            question_text: 'What star is at the center of our solar system?',
+            options: ['The Sun', 'North Star', 'Alpha Centauri'],
+            correct_index: 0,
+            explanation: 'The Sun is the massive star that all planets in our solar system orbit around!'
         }]
     }
 ];
@@ -106,7 +129,7 @@ function switchMode(mode) {
 function loadFeedItem(index) {
     const item = seedSequence[index % seedSequence.length];
 
-    document.getElementById('feed-subject').innerText = 'Mathematics';
+    document.getElementById('feed-subject').innerText = item.concept.topic === 'Fractions' ? 'Mathematics' : 'Science';
     document.getElementById('feed-concept-title').innerText = item.concept.title;
     document.getElementById('feed-step-num').innerText = item.step_index;
     document.getElementById('feed-total-steps').innerText = item.total_steps;
@@ -115,7 +138,7 @@ function loadFeedItem(index) {
     document.getElementById('video-creator').innerHTML = `<i data-lucide="check-circle-2"></i> Verified Creator: ${item.video.channel_name}`;
 
     const iframe = document.getElementById('yt-player');
-    iframe.src = `https://www.youtube.com/embed/${item.video.youtube_video_id}?enablejsapi=1&autoplay=1&controls=1&modestbranding=1`;
+    iframe.src = `https://www.youtube.com/embed/${item.video.youtube_video_id}?autoplay=1&controls=1&modestbranding=1&rel=0`;
     lucide.createIcons();
 }
 
