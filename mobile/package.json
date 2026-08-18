@@ -18,6 +18,7 @@
     "react-dom": "18.3.1",
     "react-native": "0.76.7",
     "react-native-web": "~0.19.13",
+    "react-native-webview": "13.12.5",
     "lucide-react-native": "^0.475.0",
     "react-native-svg": "15.8.0"
   },

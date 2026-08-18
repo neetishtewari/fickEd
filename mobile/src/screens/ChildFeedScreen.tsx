@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { fetchNextFeedItem, submitTelemetryEvent, FeedPayload } from '../services/api';
 import { ActiveRecallModal } from '../components/ActiveRecallModal';
+import { YouTubeVideoPlayer } from '../components/YouTubeVideoPlayer';
 
 const { width } = Dimensions.get('window');
 
@@ -68,8 +69,12 @@ export const ChildFeedScreen: React.FC = () => {
 
       {/* Vertical Video Card */}
       <View style={styles.videoCard}>
-        <View style={styles.videoPlaceholder}>
-          <Text style={styles.playIcon}>▶</Text>
+        <View style={styles.videoPlayerContainer}>
+          <YouTubeVideoPlayer youtubeVideoId={feedItem.video.youtube_video_id} />
+        </View>
+
+        {/* Video Info Overlay */}
+        <View style={styles.videoOverlay}>
           <Text style={styles.videoTitleText}>{feedItem.video.title}</Text>
           <Text style={styles.creatorText}>By {feedItem.video.channel_name}</Text>
         </View>
@@ -198,27 +203,28 @@ const styles = StyleSheet.create({
     position: 'relative',
     marginBottom: 20,
   },
-  videoPlaceholder: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+  videoPlayerContainer: {
+    width: '100%',
+    height: '100%',
   },
-  playIcon: {
-    fontSize: 48,
-    color: '#6366F1',
-    marginBottom: 12,
+  videoOverlay: {
+    position: 'absolute',
+    bottom: 20,
+    left: 16,
+    right: 80,
+    pointerEvents: 'none',
   },
   videoTitleText: {
     color: '#FFF',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
-    textAlign: 'center',
-    marginBottom: 6,
+    textShadowColor: 'rgba(0,0,0,0.8)',
+    textShadowRadius: 4,
+    marginBottom: 2,
   },
   creatorText: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: 'rgba(255,255,255,0.8)',
+    fontSize: 12,
   },
   actionColumn: {
     position: 'absolute',
