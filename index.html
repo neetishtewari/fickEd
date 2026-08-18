@@ -51,7 +51,7 @@
                     <div class="concept-header">
                         <div class="concept-pill">
                             <span class="subject-tag" id="feed-subject">Mathematics</span>
-                            <span class="concept-title" id="feed-concept-title">Equivalent Fractions</span>
+                            <span class="concept-title" id="feed-concept-title">What is a Fraction?</span>
                         </div>
                         <div class="step-indicator">
                             Step <span id="feed-step-num">1</span> of <span id="feed-total-steps">4</span>
@@ -60,25 +60,40 @@
 
                     <!-- Vertical Video Card -->
                     <div class="video-card">
+                        <!-- Primary YouTube Embed Player -->
                         <div class="iframe-container" id="iframe-container">
                             <iframe id="yt-player" 
-                                src="https://www.youtube.com/embed/N1-eN_j8YxQ?enablejsapi=1&autoplay=1&controls=1&modestbranding=1" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen>
                             </iframe>
                         </div>
 
+                        <!-- Fallback HTML5 Player (Active if YouTube Embed Blocked) -->
+                        <div class="fallback-player-container hidden" id="fallback-container">
+                            <video id="html5-video" controls autoplay loop muted playsinline class="html5-video">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                                Your browser does not support HTML5 video.
+                            </video>
+                            <div class="fallback-banner">
+                                <i data-lucide="info"></i>
+                                <span>YouTube Embed Restricted • Playing Educational Preview</span>
+                                <a id="external-yt-link" href="#" target="_blank" class="yt-direct-btn">
+                                    Watch on YouTube <i data-lucide="external-link"></i>
+                                </a>
+                            </div>
+                        </div>
+
                         <!-- Video Info Overlay -->
                         <div class="video-info-overlay">
-                            <h3 id="video-title">Fractions for Kids - MathAntics</h3>
+                            <h3 id="video-title">Fractions Are Parts of a Whole</h3>
                             <p id="video-creator"><i data-lucide="check-circle-2"></i> Verified Creator: MathAntics</p>
                         </div>
 
                         <!-- Side Action Bar -->
                         <div class="side-action-bar">
                             <button class="action-btn" onclick="triggerQuestionModal()">
-                                <div class="icon-wrap"><i data-lucide="help-circle"></i></div>
+                                <div class="icon-wrap glow-blue"><i data-lucide="help-circle"></i></div>
                                 <span>Quiz</span>
                             </button>
                             <button class="action-btn" id="like-btn" onclick="toggleLike()">

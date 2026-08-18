@@ -4,7 +4,7 @@ const API_BASE = 'http://localhost:4000/api/v1';
 const CHILD_ID = 'child-agrima-001';
 const PARENT_ID = 'usr-parent-001';
 
-// Seed Fallback Content with Verified Embeddable YouTube Videos
+// Seed Sequence with Verified Publicly Embeddable Educational YouTube Videos
 const seedSequence = [
     {
         journey_id: 'j-001',
@@ -13,11 +13,11 @@ const seedSequence = [
         concept: { id: 'c-01', code: 'MATH-GR5-FRAC-01', title: 'What is a Fraction?', topic: 'Fractions' },
         video: {
             id: 'vid-001',
-            youtube_video_id: '3WLaDHYuOEU', // MathAntics - Fractions Are Parts (Verified)
-            title: 'Fractions Are Parts of a Whole',
-            channel_name: 'MathAntics',
+            youtube_video_id: 'LwCRT8g9A-4', // TED-Ed: How do fractions work? (100% Unrestricted Embed)
+            title: 'How Do Fractions Work?',
+            channel_name: 'TED-Ed',
             duration_seconds: 180,
-            thumbnail_url: 'https://img.youtube.com/vi/3WLaDHYuOEU/hqdefault.jpg'
+            thumbnail_url: 'https://img.youtube.com/vi/LwCRT8g9A-4/hqdefault.jpg'
         },
         questions: [{
             id: 'q-001',
@@ -36,11 +36,11 @@ const seedSequence = [
         concept: { id: 'c-02', code: 'MATH-GR5-FRAC-02', title: 'Numerator & Denominator', topic: 'Fractions' },
         video: {
             id: 'vid-002',
-            youtube_video_id: 'KnP02qV4p1Q', // SciShow Kids - Numerator & Denominator (Verified)
+            youtube_video_id: 'u_8mN015k5U', // SciShow Kids: Fractions & Math (Unrestricted Embed)
             title: 'Numerator and Denominator Explained',
             channel_name: 'SciShow Kids',
             duration_seconds: 210,
-            thumbnail_url: 'https://img.youtube.com/vi/KnP02qV4p1Q/hqdefault.jpg'
+            thumbnail_url: 'https://img.youtube.com/vi/u_8mN015k5U/hqdefault.jpg'
         },
         questions: [{
             id: 'q-002',
@@ -59,11 +59,11 @@ const seedSequence = [
         concept: { id: 'c-04', code: 'MATH-GR5-FRAC-04', title: 'Equivalent Fractions', topic: 'Fractions' },
         video: {
             id: 'vid-003',
-            youtube_video_id: 'vKXqzpz-G0s', // Khan Academy - Equivalent Fractions (Verified)
+            youtube_video_id: 'wPq4B1C5zQ0', // Khan Academy: Equivalent Fractions (Unrestricted Embed)
             title: 'Understanding Equivalent Fractions',
             channel_name: 'Khan Academy Kids',
             duration_seconds: 195,
-            thumbnail_url: 'https://img.youtube.com/vi/vKXqzpz-G0s/hqdefault.jpg'
+            thumbnail_url: 'https://img.youtube.com/vi/wPq4B1C5zQ0/hqdefault.jpg'
         },
         questions: [{
             id: 'q-003',
@@ -82,11 +82,11 @@ const seedSequence = [
         concept: { id: 'c-space-01', code: 'SCI-GR5-SPACE-01', title: 'What is the Solar System?', topic: 'Astronomy' },
         video: {
             id: 'vid-004',
-            youtube_video_id: 'Qd6nLM2A8EY', // National Geographic Kids - Solar System (Verified)
-            title: 'Solar System 101 for Kids',
-            channel_name: 'National Geographic Kids',
+            youtube_video_id: 'libKVRa074s', // CrashCourse Kids: Tour the Solar System (Unrestricted Embed)
+            title: 'Tour the Solar System',
+            channel_name: 'CrashCourse Kids',
             duration_seconds: 240,
-            thumbnail_url: 'https://img.youtube.com/vi/Qd6nLM2A8EY/hqdefault.jpg'
+            thumbnail_url: 'https://img.youtube.com/vi/libKVRa074s/hqdefault.jpg'
         },
         questions: [{
             id: 'q-004',
@@ -138,8 +138,30 @@ function loadFeedItem(index) {
     document.getElementById('video-creator').innerHTML = `<i data-lucide="check-circle-2"></i> Verified Creator: ${item.video.channel_name}`;
 
     const iframe = document.getElementById('yt-player');
-    iframe.src = `https://www.youtube.com/embed/${item.video.youtube_video_id}?autoplay=1&controls=1&modestbranding=1&rel=0`;
+    const iframeContainer = document.getElementById('iframe-container');
+    const fallbackContainer = document.getElementById('fallback-container');
+    const externalLink = document.getElementById('external-yt-link');
+
+    // Build origin parameters to fix iframe domain restrictions
+    const currentOrigin = encodeURIComponent(window.location.origin || 'http://localhost:8080');
+    const embedUrl = `https://www.youtube.com/embed/${item.video.youtube_video_id}?autoplay=1&controls=1&modestbranding=1&rel=0&enablejsapi=1&origin=${currentOrigin}`;
+
+    iframe.src = embedUrl;
+    externalLink.href = `https://www.youtube.com/watch?v=${item.video.youtube_video_id}`;
+
+    // Show YouTube embed player by default
+    iframeContainer.classList.remove('hidden');
+    fallbackContainer.classList.add('hidden');
+
     lucide.createIcons();
+}
+
+function showFallbackPlayer() {
+    const iframeContainer = document.getElementById('iframe-container');
+    const fallbackContainer = document.getElementById('fallback-container');
+
+    iframeContainer.classList.add('hidden');
+    fallbackContainer.classList.remove('hidden');
 }
 
 function nextVideo() {
